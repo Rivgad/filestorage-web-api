@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.Extensions;
 using WebAPI.Routes.Auth;
+using WebAPI.Routes.Files;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 
 builder.Services.AddAuthEndpointsServices();
+builder.Services.AddFileEndpointsServices();
+builder.Services.AddFileSharingEndpointsServices();
 
 var app = builder.Build();
 
@@ -27,13 +30,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthentication();
 
-app.MapGet("/health", () =>
-{
-	return "OK";
-})
-.WithName("Health")
-.WithOpenApi();
-
 app.MapAuthEndpoints();
+app.MapFileEndpoints();
+app.MapFileSharingEndpoints();
 
 app.Run();
