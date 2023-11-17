@@ -40,11 +40,11 @@ public static class FileStorageEndpoints
 		})
 		.WithSummary("Create link for share file or group of files");
 
-		group.MapGet("/download/{code:Guid}", (Guid code) =>
+		group.MapGet("/download", (Guid code) =>
 		{
 
 		})
-		.WithSummary("Download file or group of files");
+		.WithSummary("Download file or group of files by shared link");
 
 		group.WithOpenApi();
 	}
