@@ -14,7 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 
 builder.Services.AddAuthEndpointsServices();
-builder.Services.AddFileStorageEndpointsServices();
+builder.Services.AddFileEndpointsServices();
+builder.Services.AddFileSharingEndpointsServices();
 
 var app = builder.Build();
 
@@ -30,6 +31,7 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.MapAuthEndpoints();
-app.MapFileStorageEndpoints();
+app.MapFileEndpoints();
+app.MapFileSharingEndpoints();
 
 app.Run();
