@@ -29,13 +29,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthentication();
 
-app.MapGet("/health", () =>
-{
-	return "OK";
-})
-.WithName("Health")
-.WithOpenApi();
-
 app.MapAuthEndpoints();
 app.MapFileStorageEndpoints();
 
