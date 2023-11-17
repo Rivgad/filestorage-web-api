@@ -16,6 +16,12 @@ public static class FileStorageEndpoints
 	{
 		var group = app.MapGroup("/files").WithTags("Files");
 
+		group.MapGet("/", () =>
+		{
+
+		})
+		.WithSummary("Show uploaded files and group of files");
+
 		group.MapPost("/upload", (IFormFileCollection files) =>
 		{
 
