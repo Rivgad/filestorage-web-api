@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebAPI.Extensions;
 using WebAPI.Routes.Auth;
+using WebAPI.Routes.Files;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
 
 builder.Services.AddAuthEndpointsServices();
+builder.Services.AddFileStorageEndpointsServices();
 
 var app = builder.Build();
 
@@ -35,5 +37,6 @@ app.MapGet("/health", () =>
 .WithOpenApi();
 
 app.MapAuthEndpoints();
+app.MapFileStorageEndpoints();
 
 app.Run();
