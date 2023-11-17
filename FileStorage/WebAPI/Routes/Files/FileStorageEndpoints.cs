@@ -22,6 +22,12 @@ public static class FileStorageEndpoints
 		})
 		.WithSummary("Show uploaded files and group of files");
 
+		group.MapGet("/{id:Guid}", (Guid id) =>
+		{
+
+		})
+		.WithSummary("Download file or group of files");
+
 		group.MapPost("/upload", (IFormFileCollection files) =>
 		{
 
@@ -33,12 +39,6 @@ public static class FileStorageEndpoints
 
 		})
 	   .WithSummary("Check upload status of file or group of files");
-
-		group.MapGet("/{id:Guid}", (Guid id) =>
-		{
-
-		})
-		.WithSummary("Download file or group of files");
 
 		group.MapPost("/share/{id:Guid}", (Guid id) =>
 		{
