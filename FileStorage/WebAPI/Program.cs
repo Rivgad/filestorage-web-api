@@ -1,38 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
+using WebAPI.Extensions;
+using WebAPI.Routes.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-	options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-	{
-		Scheme = "Bearer",
-		BearerFormat = "JWT",
-		In = ParameterLocation.Header,
-		Name = "Authorization",
-		Description = "Bearer Authentication with JWT Token",
-		Type = SecuritySchemeType.Http
-	});
-	options.AddSecurityRequirement(new OpenApiSecurityRequirement
-	{
-		{
-			new OpenApiSecurityScheme
-			{
-				Reference = new OpenApiReference
-				{
-					Id = "Bearer",
-					Type = ReferenceType.SecurityScheme
-				}
-			},
-			new List<string>()
-		}
-	});
-});
+builder.Services.AddSwagger();
+
+builder.Services.AddAuthEndpointsServices();
 
 var app = builder.Build();
 
@@ -44,6 +24,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapGet("/health", () =>
 {
@@ -51,5 +33,7 @@ app.MapGet("/health", () =>
 })
 .WithName("Health")
 .WithOpenApi();
+
+app.MapAuthEndpoints();
 
 app.Run();
